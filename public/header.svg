@@ -5,7 +5,7 @@
    viewBox="-35 10 760 267"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
    sodipodi:docname="header.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,9 +23,9 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.24231201"
-     inkscape:cx="249.67809"
-     inkscape:cy="1009.0296"
+     inkscape:zoom="0.90509668"
+     inkscape:cx="232.01941"
+     inkscape:cy="176.7767"
      inkscape:window-width="3440"
      inkscape:window-height="1328"
      inkscape:window-x="0"
@@ -33,7 +33,8 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="text236"
      inkscape:lockguides="false"
-     showguides="true" />
+     showguides="true"
+     inkscape:pageshadow="0" />
   <defs
      id="defs2">
     <linearGradient
@@ -278,16 +279,16 @@
        y2="-227"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(-69,372)">
-       <animate
+      <animate
          attributeName="x1"
          values="-1796;-855"
          dur="10s"
-         repeatCount="indefinite"/>
-       <animate
+         repeatCount="indefinite" />
+      <animate
          attributeName="x2"
          values="-87;768"
          dur="10s"
-         repeatCount="indefinite"/>
+         repeatCount="indefinite" />
     </linearGradient>
     <clipPath
        clipPathUnits="userSpaceOnUse"
@@ -304,15 +305,10 @@
      id="layer1"
      transform="translate(192.91202,78.437126)">
     <g
-       aria-label="Fat
-  .Rocks"
+       aria-label="Fat   .Rocks"
        id="text236"
        style="font-size:25.4px;line-height:0.85;stroke-width:0.264583"
        transform="translate(0,0.1063931)">
-      <path
-         d="m -744.45813,156.06087 v 0 l -8.96055,-6.31825 8.96055,6.31825 m -14.75317,-12.30136 -4.03224,-10.36814 -1.68276,-4.32506 -52.75791,-31.665333 52.75791,31.665333 -0.0106,-0.003 0.007,0.003 5.71853,14.6932 m -186.34076,-18.95122 0.87489,-8.46667 0.99836,-2.80459 -0.99836,2.80459 -0.87489,8.46667 v 0 m 3.15737,-14.8837 60.9353,-50.253198 v 0 0 0 l -60.9353,50.249668 v 0 m 122.95717,-37.22864 v 0 l -44.46059,-9.3345 -8.77358,-1.8415 20.56694,4.318 32.66723,6.858 v 0"
-         style="font-size:25.4px;line-height:0.85;fill:#ffffff"
-         id="path22152-4" />
       <g
          id="g148794"
          transform="translate(-63.463749,12.824941)">
