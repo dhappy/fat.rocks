@@ -1,33 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <>
+      <header>
+        <object data="header.svg"/>
+      </header>
+      <main>
+        <p>Fat.Rocks is an experiment in creating a privacy-preserving market, specifically for illegal substances using zero-knowledge, encryption, and token-gating rather than The Onion Router.</p>
+        <p>It is the author's opinion that though it hasn't been as brutal, the War On Drugs has been regressive on par with slavery. Future generations will look back on our mass incarcerations, militarization of police, and criminalization of behavior; and wonder how normal people thought this was ok. Much like we do with slavery, or crucifixion, or whatever.</p>
+      </main>
+    </>
   )
 }
 
