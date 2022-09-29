@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Peace and Love";
-  src: url("Peace%20and%20Love.ttf") format("truetype");
+  src: url("Peace and Love.ttf") format("truetype");
 }
 
 
@@ -11,14 +11,10 @@ body {
 header {
   text-align: center;
 
-  /* PostCSS is supposed to allow this, but it's
-   * not getting compiled.
-   *
   object {
     max-height: 30vh;
     margin: auto;
   }
-   */
 }
 
 main {
