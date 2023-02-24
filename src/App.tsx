@@ -4,7 +4,7 @@ const App = () => {
   return (
     <>
       <header>
-        <object data="header.svg"/>
+        <img src="header.svg"/>
       </header>
       <main>
         <p>Fat.Rocks is an experiment in creating a privacy-preserving market, specifically for illegal substances, using zero-knowledge, encryption, and token-gating rather than leveraging The Onion Router as is most common today.</p>
