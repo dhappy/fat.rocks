@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Cantarell';
+  src: url('Cantarell.woff2') format('woff2');
+}
+rect {
+  fill: #efe00d;
+  paint-order: stroke fill markers;
+  stroke-width: 15;
+  stroke: #122dff;
+}
+text {
+  fill: #178228;
+  font-family: Cantarell;
+  font-size: 133px;
+  letter-spacing: 3px;
+  paint-order: stroke fill markers;
+  stroke-linejoin: round;
+  stroke-width: 15;
+  stroke: #2a2d64;
+  word-spacing: -0.5px;
+}
