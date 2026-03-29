@@ -13,6 +13,10 @@ const njk = nunjucks.configure({
 })
 
 const OUT = `output-${new Date().toISOString()}`
+const pattern = {
+  image: /(<image\b[^>]*?\s)((?:xlink:)?href)\s*=\s*(?:"([^"]+)"|'([^']+)')/gi,
+  css: /<html:link rel="stylesheet" href="(.+)"\/>/gi,
+}
 
 try {
   const template = await fs.readFile(
@@ -24,6 +28,7 @@ try {
   const resources = JSON5.parse(
     await fs.readFile(
       path.join(process.cwd(), 'resources.json5'),
+      'utf8',
     )
   )
   await Promise.all(
@@ -39,7 +44,9 @@ try {
     })
   )
 
-  const files = await glob('*.webp')
+  await fs.symlink('../images/', `${OUT}/images`)
+
+  const files = await glob('images/*.webp')
   await Promise.all(
     files.map(async (filename, idx) => {
       const outputPath = path.join(
@@ -48,6 +55,7 @@ try {
       console.log(`Rendering: ${outputPath}`)
       const result = njk.renderString(template, { filename })
       await fs.writeFile(outputPath, result)
+      await inlineResources(outputPath)
       console.log(`Generated: ${outputPath}`)
     })
   )
@@ -56,4 +64,85 @@ try {
 } catch (error) {
   console.error('Error processing template:', error)
   process.exit(1);
+}
+
+export async function inlineResources(toDo) {
+  console.debug(`Inlining Images In: ${toDo}`)
+  const svgDir = path.dirname(toDo)
+
+  const base = (await fs.readFile(toDo)).toString()
+
+  let matches = [...base.matchAll(pattern.image)]
+  const replacements = await Promise.all(
+    matches.map(async ([full, prefix, attr, dq, sq]) => {
+      const uri = dq ?? sq
+
+      if (uri.startsWith('data:') || /^(https?:)?\/\//i.test(uri)) {
+        return { full, replacement: full } // no-op
+      }
+
+      const absolutePath = path.join(svgDir, decodeURIComponent(uri))
+      const ext = path.extname(uri)
+      const mime = mimeForExtension(ext)
+      console.debug({ Reading: absolutePath })
+      const bytes = await fs.readFile(absolutePath)
+      const isSVG = (ext === '.svg')
+      const encoded = isSVG ? percentEncode(bytes) : bytes.toString('base64')
+      const encoding = isSVG ? '' : ';base64'
+      const quote = dq !== undefined ? '"' : "'"
+      return {
+        full,
+        replacement: `${prefix}${attr}=${quote}data:${mime}${encoding},${encoded}${quote}`
+      }
+    })
+  )
+  matches = [...base.matchAll(pattern.css)]
+  replacements.push(...await Promise.all(
+    matches.map(async ([full, href]) => {
+      console.debug({ 'Inling Style': href })
+      return {
+        full,
+        replacement: `<style type="text/css"><![CDATA[${await fs.readFile(path.join(svgDir, decodeURIComponent(href)))}]]></style>`,
+      }
+    })
+  ))
+
+  console.debug({ Processed: toDo })
+
+  let svg = base
+  for(const { full, replacement } of replacements) {
+    svg = svg.replaceAll(full, replacement)
+  }
+
+  const parts = toDo.split('.')
+  const done = parts.slice(0, -1).concat(['inlined', parts.at(-1)]).join('.')
+  await fs.writeFile(done, svg)
+  console.debug(`Wrote encoded images to ${done}.`)
+}
+
+function percentEncode(bytes) {
+  const unreserved = /[A-Za-z0-9\-._~]/
+  const out = []
+  for(const byte of bytes) {
+    const ch = String.fromCharCode(byte);
+    if(unreserved.test(ch)) {
+      out.push(ch)
+    } else {
+      out.push('%' + byte.toString(16).toUpperCase().padStart(2, '0'))
+    }
+  }
+  return out.join('')
+}
+
+function mimeForExtension(ext) {
+  const map = {
+    '.png':  'image/png',
+    '.jpg':  'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.gif':  'image/gif',
+    '.webp': 'image/webp',
+    '.svg':  'image/svg+xml',
+    '.avif': 'image/avif',
+  }
+  return map[ext.toLowerCase()] ?? 'application/octet-stream'
 }
