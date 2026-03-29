@@ -1,0 +1,37 @@
+<svg version="1.1" viewBox="0 0 62.758 62.758" xmlns="http://www.w3.org/2000/svg">
+  <title>Adult Use Only</title>
+  <defs>
+    <style>
+      circle {
+        fill: #881dce;
+        paint-order: stroke fill markers;
+        stroke-width: 12;
+        stroke:#0f0364
+      }
+      text {
+        fill: #f507f5;
+        font-family: Cantarell;
+        font-size: 32px;
+        letter-spacing: -2px;
+        paint-order: stroke fill markers;
+        stroke-linejoin: round;
+        stroke-width: 5;
+        stroke:#0f0364;
+        text-align: center;
+        text-anchor: middle;
+      }
+      text:last-child {
+        fill:#1d83ce;
+        font-size: 10px;
+        letter-spacing: 0px;
+        stroke-width: 2;
+      }
+    </style>
+  </defs>
+  <circle cx="50%" cy="50%" r="40%"/>
+  <text x="51%" y="52%">21+</text>
+  <text x="52%" y="71%">
+    <tspan>adult use</tspan>
+    <tspan x="49%" dy="13%">only</tspan>
+  </text>
+</svg>
