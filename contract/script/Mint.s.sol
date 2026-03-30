@@ -5,22 +5,21 @@ import { Script, console } from "forge-std/Script.sol";
 import { stdJson } from "forge-std/StdJson.sol";
 
 interface IERC721Mintable {
-    function safeMint(address to, string calldata tokenURI) external returns (uint256);
+  function safeMint(address to, string calldata tokenURI) external returns (uint256);
 }
 
-contract BatchMint is Script {
+contract Mint is Script {
   using stdJson for string;
 
   function run(
-    address contract,
+    address addr,
     address recipient,
     string calldata input
   ) external {
     if(recipient == address(0)) {
-      recipient = msg.sender
+      recipient = msg.sender;
     }
-    string memory path   = string.concat(vm.projectRoot(), input);
-
+    string memory path = string.concat(vm.projectRoot(), "/", input);
     string memory raw = vm.readFile(path);
     string[] memory tokenURIs = raw.readStringArray("");
 
@@ -28,11 +27,11 @@ contract BatchMint is Script {
 
     vm.startBroadcast();
 
-    IERC721Mintable nft = IERC721Mintable(contract);
+    IERC721Mintable nft = IERC721Mintable(addr);
 
     for(uint256 i = 0; i < tokenURIs.length; i++) {
-        uint256 tokenId = nft.safeMint(recipient, tokenURIs[i]);
-        console.log("  Minted #%d: %s", tokenId, tokenURIs[i]);
+      uint256 tokenId = nft.safeMint(recipient, tokenURIs[i]);
+      console.log("  Minted #%d: %s", tokenId, tokenURIs[i]);
     }
 
     vm.stopBroadcast();

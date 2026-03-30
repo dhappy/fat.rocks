@@ -25,3 +25,17 @@ forge test --force
 3. `cast wallet import deployer --interactive # paste private key from step #1`
 4. `forge script script/Diamonds.s.sol --account deployer --broadcast --rpc-url https://mainnet.optimism.io`
 5. `forge verify-contract --chain 10 --address` *<deployed address from step #4>* `src/Diamonds.sol:Diamonds --verifier etherscan --etherscan-api-key` *<key from [Mainnet Etherscan](https://etherscan.io), not [Optimistic Etherscan](https://optimism.etherscan.io)>*
+
+## Minting a Batch
+
+```bash
+forge script script/Mint.s.sol:Mint \
+  --sig "run(address,address,string)" \
+  0xYourNFTContract \
+  0xRecipientAddress \
+  "mints/uris.json" \
+  --rpc-url https://mainnet.optimism.io \
+  --account deployer \
+  --broadcast \
+  -vvvv
+```
