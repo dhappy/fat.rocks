@@ -1,7 +1,4 @@
-module.exports = (ctx) => {
-  console.info('HERE!!!')
-  
-  return ({
+module.exports = (ctx) => ({
   map: 'inline',
   plugins: {
     'postcss-import': {},
@@ -11,4 +8,3 @@ module.exports = (ctx) => {
     autoprefixer: {},
   },
 })
-}

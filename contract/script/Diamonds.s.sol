@@ -10,10 +10,8 @@ contract DiamondsScript is Script {
   function setUp() public {}
 
   function run() public {
-    // TODO: Set addresses for the variables below, then uncomment the following section:
-    /*
     vm.startBroadcast();
-    address initialOwner = <Set initialOwner address here>;
+    address initialOwner = 0x681b7E45361583fa16BC94Fd3A98003156592096;
     Options memory opts;
     opts.unsafeAllow = "constructor";
     address proxy = Upgrades.deployTransparentProxy(
@@ -25,6 +23,5 @@ contract DiamondsScript is Script {
     Diamonds instance = Diamonds(proxy);
     console.log("Proxy deployed to %s", address(instance));
     vm.stopBroadcast();
-    */
   }
 }
