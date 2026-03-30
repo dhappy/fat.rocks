@@ -6,6 +6,11 @@ import path from 'node:path'
 import JSON5 from 'json5'
 import { glob } from 'glob'
 
+// Hack
+const imagePattern = (
+  "https://bafybeiamuxc74bki5rdht3sufi7xugyc5om27qbecaf3nyjht2lmlhxxju.ipfs.w3s.link/%E2%84%96{{ count }}.cover.inlined.svg"
+)
+
 const njk = nunjucks.configure({
   autoescape: false,
   trimBlocks: true,
@@ -19,8 +24,12 @@ const pattern = {
 }
 
 try {
-  const template = await fs.readFile(
-    path.join(process.cwd(), 'cover.njk'),
+  const cover = await fs.readFile(
+    path.join(process.cwd(), 'cover.html.njk'),
+    'utf8'
+  )
+  const manifest = await fs.readFile(
+    path.join(process.cwd(), '№1.manifest.json.njk'),
     'utf8'
   )
   await fs.mkdir(OUT, { recursive: true })
@@ -47,15 +56,29 @@ try {
   await fs.symlink('../images/', `${OUT}/images`)
 
   const files = await glob('images/*.webp')
-  await Promise.all(
+  const outs = await Promise.all(
     files.map(async (filename, idx) => {
       const outputPath = path.join(
         OUT, `№${idx + 1}.cover.svg`
       )
       console.log(`Rendering: ${outputPath}`)
-      const result = njk.renderString(template, { filename })
+      const result = njk.renderString(cover, { filename })
       await fs.writeFile(outputPath, result)
       await inlineResources(outputPath)
+      console.log(`Generated: ${outputPath}`)
+      return outputPath
+    })
+  )
+
+  await Promise.all(
+    outs.map(async (_filename, idx) => {
+      const outputPath = path.join(
+        OUT, `№${idx + 1}.manifest.json`
+      )
+      console.log(`Rendering: ${outputPath}`)
+      const filename = njk.renderString(imagePattern, { count: idx + 1 }) // Más hack
+      const result = njk.renderString(manifest, { filename })
+      await fs.writeFile(outputPath, result)
       console.log(`Generated: ${outputPath}`)
     })
   )
